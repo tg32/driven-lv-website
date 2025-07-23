@@ -77,7 +77,7 @@ export default function Header() {
                 alt="DRIVEN LV Logo"
                 width={66}
                 height={60}
-                className="h-15 w-auto"
+                className="h-8 w-auto"
                 priority
               />
               <span className="sr-only">DRIVEN LV Home</span>
