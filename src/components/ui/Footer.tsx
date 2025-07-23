@@ -23,7 +23,7 @@ export default function Footer({ id }: FooterProps) {
             <h2 id="footer-heading" className="sr-only">Footer</h2>
             <div className="flex items-center space-x-3 mb-4">
               <Image
-                src="/driven-logo.png"
+                src="/driven-lv-website/driven-logo.png"
                 alt="DRIVEN LV Logo"
                 width={32}
                 height={32}

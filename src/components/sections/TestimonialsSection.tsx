@@ -18,7 +18,7 @@ const testimonials: Testimonial[] = [
     id: '1',
     name: 'Javier Guerrero',
     condition: 'DRIVEN Member & Partner of a DRIVEN Training Client',
-    image: '/driven-logo.png',
+    image: '/driven-lv-website/driven-logo.png',
     quote: 'My girlfriend - who trains at DRIVEN too - is in a wheelchair with a disability that limits the strength in her arms and legs. Throughout my time here, the trainers have been amazing at helping her increase her overall strength and endurance. They\'ve also been able to train me on how to exercise better, carry her more properly so we\'re both safe, and exercises I can help her with at home. This place has been life-changing for us and has brought us closer together.',
     program: 'Partner Training Program'
   },
@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
     id: '2',
     name: 'Tammy Malmgren',
     condition: 'Wife of DRIVEN Client Darrell Malmgren',
-    image: '/driven-logo.png',
+    image: '/driven-lv-website/driven-logo.png',
     quote: 'After several months of Darrell using the Galileo at DRIVEN as part of his treatment for the high tone spasticity he has due to his brain injury, the spasticity has decreased so significantly that I was able to cancel the Botox injections for his legs! Darrell\'s strength is improving as well with the Galileo and training he is receiving from the trainers at DRIVEN. Both Darrell and I thank the team!',
     program: 'Galileo Treatment & Adaptive Training'
   },
@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     id: '3',
     name: 'Cesar Robledo',
     condition: 'DRIVEN Training Client',
-    image: '/driven-logo.png',
+    image: '/driven-lv-website/driven-logo.png',
     quote: 'My favorite thing about DRIVEN is the level of professionalism and skill the trainers have when adapting to my physical abilities in creating different workouts. I don\'t feel like just any other patient who\'s been injured. Here, they personalize my workouts and continuously push me to MY full potential.',
     program: 'Personalized Adaptive Training'
   },

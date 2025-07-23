@@ -58,7 +58,7 @@ export default function VideoBackground({
           playsInline
           style={{ opacity: 0.9 }}
         >
-          <source src="/cpn-driven-video.mp4" type="video/mp4" />
+          <source src="/driven-lv-website/cpn-driven-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         

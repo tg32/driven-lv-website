@@ -5,25 +5,25 @@ import { useState, useEffect, useRef } from 'react'
 const posts = [
   {
     id: '1',
-    image: '/drivenolym.jpg',
+    image: '/driven-lv-website/drivenolym.jpg',
     caption: 'For in-person signups be sure to stop by at the DRIVEN front desk! Early bird pricing ongoing til July 15!\n\nDRIVEN Olympics going strong on its 5th year! 💪🏼\n\nY\'all ready for this??!! 🏆🥇🥈🥉🏅',
     timestamp: '2 hours ago'
   },
   {
     id: '2', 
-    video: '/ig0703_small.mp4',
+    video: '/driven-lv-website/ig0703_small.mp4',
     caption: 'DRIVEN Olympics Powered by Move United\nJoin us August 16th, Dula Community Center Gymnasium at 930am.\n\nDRIVEN Olympics offers a variety of inclusive events that are adapted to fit the needs and ability levels of all our members. Each activity was curated and chosen with all members in mind and allows for participants to compete no matter their ability level.\n\nRegistration fees as follows:\n\n6/16-7/15: Early Bird Pricing $10.00\n\n7/16-8/6: Tier II Pricing $15.00\n\n8/7-8/16: Final Call Pricing $25.00\nPay registration fees at DRIVEN Front Desk',
     timestamp: '1 day ago'
   },
   {
     id: '3',
-    video: '/IG3.mp4',
+    video: '/driven-lv-website/IG3.mp4',
     caption: 'DRIVEN Olympics Powered by Move United\nJoin us August 16th, Dula Community Center Gymnasium at 930am.\n\nDRIVEN Olympics offers a variety of inclusive events that are adapted to fit the needs and ability levels of all our members. Each activity was curated and chosen with all members in mind and allows for participants to compete no matter their ability level.',
     timestamp: '3 days ago'
   },
   {
     id: '4',
-    video: '/IG4.mp4',
+    video: '/driven-lv-website/IG4.mp4',
     caption: 'Ways I Workout as a Quadriplegic 💪🏼\n\nHere at @drivenlv we have so many exercises you couldn\'t do at a regular gym.\n\nThe other day, we used an Xcite to fire my muscles while I am standing giving me a full body workout 🏋️‍♀️',
     timestamp: '4 days ago'
   }

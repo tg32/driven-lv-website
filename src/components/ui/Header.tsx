@@ -73,7 +73,7 @@ export default function Header() {
               aria-label="DRIVEN LV - Home"
             >
               <Image
-                src="/driven-logo.png"
+                src="/driven-lv-website/driven-logo.png"
                 alt="DRIVEN LV Logo"
                 width={132}
                 height={120}
