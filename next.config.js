@@ -8,18 +8,7 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'scontent-lax3-2.cdninstagram.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'scontent.cdninstagram.com',
-        port: '',
-        pathname: '/**',
-      },
+
       {
         protocol: 'https',
         hostname: 'via.placeholder.com',

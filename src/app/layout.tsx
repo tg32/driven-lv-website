@@ -1,5 +1,6 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from 'next';
+import './globals.css';
+import FocusManager from '@/components/ui/FocusManager';
 
 export const metadata: Metadata = {
   title: {
@@ -60,7 +61,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html 
+      lang="en" 
+      className="scroll-smooth"
+      data-theme="light"
+      suppressHydrationWarning
+    >
       <head>
         {/* Additional accessibility and performance meta tags */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -70,19 +76,36 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
+        
+        {/* Preload critical resources */}
+        <link 
+          rel="preload" 
+          href="/fonts/your-font.woff2" 
+          as="font" 
+          type="font/woff2" 
+          crossOrigin="anonymous"
+        />
       </head>
-      <body className="min-h-screen bg-white font-sans antialiased">
-        {/* Skip to main content link for screen readers */}
-        <a 
-          href="#main-content" 
-          className="skip-link"
-          aria-label="Skip to main content"
-        >
-          Skip to main content
-        </a>
+      <body className="min-h-screen bg-white font-sans antialiased text-gray-900">
+        {/* Skip to main content links */}
+        <div className="skip-links" aria-label="Skip links">
+          <a 
+            href="#main-content" 
+            className="skip-link"
+          >
+            Skip to main content
+          </a>
+          <a 
+            href="#footer" 
+            className="skip-link"
+          >
+            Skip to footer
+          </a>
+        </div>
         
         {/* Main application wrapper with proper semantic structure */}
         <div className="flex min-h-screen flex-col">
+          <FocusManager />
           {children}
         </div>
         
@@ -93,7 +116,11 @@ export default function RootLayout({
           aria-atomic="true" 
           className="sr-only"
         />
+        
+        {/* Add focus trap for modals if needed */}
+        <div id="modal-root"></div>
       </body>
     </html>
-  )
-} 
+  );
+}
+

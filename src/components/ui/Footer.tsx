@@ -1,11 +1,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function Footer() {
+interface FooterProps {
+  id?: string;
+}
+
+export default function Footer({ id }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   return (
     <footer 
+      id={id}
       className="bg-gray-900 text-white"
       role="contentinfo"
       aria-labelledby="footer-heading"
@@ -22,7 +27,7 @@ export default function Footer() {
                 alt="DRIVEN LV Logo"
                 width={32}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8"
               />
               <span className="text-xl font-bold">DRIVEN LV</span>
             </div>
@@ -153,8 +158,8 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
                 <span>
-                  123 Accessible Way<br />
-                  Las Vegas, NV 89123
+                  701 E Bridger Ave Suite 150<br />
+                  Las Vegas, NV 89101
                 </span>
               </div>
               
@@ -163,11 +168,11 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                 </svg>
                 <a
-                  href="tel:+17025551234"
+                  href="tel:+17024634874"
                   className="hover:text-white transition-colors focus-ring rounded p-1"
-                  aria-label="Call DRIVEN LV at 7 0 2 5 5 5 1 2 3 4"
+                  aria-label="Call DRIVEN LV at 7 0 2 4 6 3 4 8 7 4"
                 >
-                  (702) 555-1234
+                  (702) 463-4874
                 </a>
               </div>
               
@@ -188,9 +193,9 @@ export default function Footer() {
             <div className="mt-6">
               <h4 className="font-semibold mb-2">Hours of Operation</h4>
               <div className="text-sm text-gray-300 space-y-1">
-                <div>Monday - Friday: 6:00 AM - 10:00 PM</div>
-                <div>Saturday: 7:00 AM - 8:00 PM</div>
-                <div>Sunday: 8:00 AM - 6:00 PM</div>
+                <div>Monday - Friday: 9:00 AM - 5:00 PM</div>
+                <div>Saturday: 9:00 AM - 3:00 PM</div>
+                <div>Sunday: Closed</div>
               </div>
             </div>
           </div>

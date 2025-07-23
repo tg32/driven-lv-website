@@ -1,128 +1,157 @@
+'use client';
+
+import { useRef, useEffect } from 'react';
+
 export default function AboutSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const focusableElements = useRef<HTMLElement[]>([]);
+
+  // Set up keyboard navigation and focus management
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    // Get all focusable elements within the section
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    focusableElements.current = Array.from(
+      sectionRef.current.querySelectorAll(focusableSelectors)
+    );
+
+    // Handle keyboard navigation
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab' && sectionRef.current) {
+        const focusable = focusableElements.current;
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    sectionRef.current.addEventListener('keydown', handleKeyDown);
+    return () => {
+      sectionRef.current?.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <section 
+      ref={sectionRef}
       id="about"
-      className="section-padding bg-white"
+      className="section-padding bg-white focus:outline-none"
       aria-labelledby="about-heading"
+      tabIndex={-1}
+      role="region"
+      aria-label="About DRIVEN LV"
     >
       <div className="container-max">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 
+            <h1 
               id="about-heading"
               className="text-section-title text-gray-900 mb-6"
             >
               About DRIVEN LV
-            </h2>
+            </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
               Empowering individuals with disabilities through accessible fitness and adaptive programming
             </p>
           </div>
 
           {/* Main Content */}
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
             {/* Mission Statement */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-gray-900">
+            <article className="space-y-6">
+              <h2 className="text-2xl font-semibold text-gray-900" id="mission-heading">
                 Our Mission
-              </h3>
-              <div className="space-y-4 text-gray-700 leading-relaxed">
+              </h2>
+              <div className="space-y-4 text-gray-700 leading-relaxed" aria-labelledby="mission-heading">
                 <p>
-                  DRIVEN LV is Las Vegas's premier accessible fitness center, dedicated to providing 
-                  exceptional adaptive fitness programs and state-of-the-art accessible equipment 
-                  for individuals with disabilities and their allies.
-                </p>
-                <p>
-                  As a sister site to <a 
+                  DRIVEN is a multidisciplinary center where individuals with disabilities can improve their physical, mental and emotional health, increase independence, and enhance their overall quality of life using a holistic approach to wellness. It is an extension of{' '}
+                  <a 
                     href="https://conquerparalysisnow.org" 
                     target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-primary-600 hover:text-primary-700 underline focus-ring rounded"
+                    rel="noopener noreferrer nofollow"
+                    className="text-primary-600 hover:text-primary-700 underline focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none rounded"
                     aria-label="Visit Conquer Paralysis Now website (opens in new tab)"
                   >
                     Conquer Paralysis Now
-                  </a>, we share the same commitment to breaking down barriers and 
-                  creating an inclusive environment where everyone can achieve their fitness goals.
+                  </a>
+                  , a 501c3 non-profit organization.
                 </p>
                 <p>
-                  Our approach combines evidence-based adaptive training methods with cutting-edge 
-                  accessible technology to deliver personalized fitness solutions that meet each 
-                  individual's unique needs and abilities.
+                  DRIVEN provides options for individuals with disabilities to pursue a healthy, active lifestyle. DRIVEN's goal is to fill in the gaps in Southern Nevada and provide options for those with limited mobility. While offering a variety of new opportunities, DRIVEN will also coordinate with existing programs in the area that cater to this population to ensure that all of their needs are met.
                 </p>
               </div>
-            </div>
+            </article>
 
             {/* Stats/Features */}
-            <div className="bg-gray-50 rounded-lg p-8">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+            <aside className="bg-gray-50 rounded-lg p-8" aria-labelledby="unique-heading">
+              <h2 id="unique-heading" className="text-2xl font-semibold text-gray-900 mb-6">
                 What Makes Us Unique
-              </h3>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              </h2>
+              <div className="space-y-6" role="list" aria-label="Key features">
+                <div className="flex items-start space-x-4" role="listitem">
+                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1" aria-hidden="true">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Certified Adaptive Trainers</h4>
+                    <h3 className="font-semibold text-gray-900">Certified Adaptive Trainers</h3>
                     <p className="text-gray-600">
                       Our team specializes in adaptive fitness and disability-specific training protocols
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <div className="flex items-start space-x-4" role="listitem">
+                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1" aria-hidden="true">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Accessible Equipment</h4>
+                    <h3 className="font-semibold text-gray-900">Accessible Equipment</h3>
                     <p className="text-gray-600">
                       State-of-the-art adaptive fitness equipment designed for all abilities
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <div className="flex items-start space-x-4" role="listitem">
+                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1" aria-hidden="true">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Inclusive Community</h4>
+                    <h3 className="font-semibold text-gray-900">Inclusive Community</h3>
                     <p className="text-gray-600">
                       A welcoming environment that celebrates diversity and individual achievements
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Personalized Programs</h4>
-                    <p className="text-gray-600">
-                      Customized fitness plans tailored to individual goals and capabilities
-                    </p>
-                  </div>
-                </div>
+
               </div>
-            </div>
+            </aside>
           </div>
 
           {/* Connection to Conquer Paralysis Now */}
-          <div className="bg-primary-50 rounded-lg p-8 text-center">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-              DRIVEN is a section of Conquer Paralysis Now
-            </h3>
+          <aside 
+            className="bg-primary-50 rounded-lg p-8 text-center"
+            aria-label="Connection to Conquer Paralysis Now"
+          >
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              DRIVEN is an extension of Conquer Paralysis Now
+            </h2>
             <p className="text-gray-700 mb-6 leading-relaxed max-w-3xl mx-auto">
               DRIVEN LV operates under Conquer Paralysis Now. Together, we're building a network of accessible fitness 
               centers that serve individuals with disabilities across the country, providing 
@@ -132,18 +161,31 @@ export default function AboutSection() {
             <a
               href="https://conquerparalysisnow.org"
               target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
+              rel="noopener noreferrer nofollow"
+              className="btn-primary focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500"
               aria-label="Visit Conquer Paralysis Now website (opens in new tab)"
             >
               Visit Conquer Paralysis Now
-              <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <span className="sr-only">(opens in new tab)</span>
+              <svg 
+                className="ml-2 h-4 w-4 inline-block" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                aria-hidden="true"
+              >
+                <title>External link icon</title>
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth="2" 
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                />
               </svg>
             </a>
-          </div>
+          </aside>
         </div>
       </div>
     </section>
-  )
+  );
 } 

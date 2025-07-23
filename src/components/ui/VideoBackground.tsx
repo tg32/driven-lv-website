@@ -2,12 +2,20 @@
 
 import { useRef, useState } from 'react'
 
-interface VideoBackgroundProps {
+interface VideoBackgroundProps extends React.HTMLAttributes<HTMLElement> {
   className?: string
   children?: React.ReactNode
+  role?: string
+  'aria-label'?: string
 }
 
-export default function VideoBackground({ className = '', children }: VideoBackgroundProps) {
+export default function VideoBackground({ 
+  className = '', 
+  children, 
+  role = 'button',
+  'aria-label': ariaLabel = 'Background video - click to pause or play',
+  ...props 
+}: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(true)
 
@@ -28,9 +36,10 @@ export default function VideoBackground({ className = '', children }: VideoBackg
       className={`relative w-full overflow-hidden cursor-pointer ${className}`} 
       style={{ height: '85vh' }}
       onClick={handleVideoClick}
-      role="button"
+      role={role}
       tabIndex={0}
-      aria-label="Background video - click to pause or play"
+      aria-label={ariaLabel}
+      {...props}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()

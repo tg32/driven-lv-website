@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -10,8 +11,8 @@ interface NavigationItem {
   current?: boolean
 }
 
-const navigation: NavigationItem[] = [
-  { name: 'Home', href: '/', current: true },
+const navigation: Omit<NavigationItem, 'current'>[] = [
+  { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Programs', href: '/programs' },
   { name: 'Contact', href: '/contact' },
@@ -19,59 +20,104 @@ const navigation: NavigationItem[] = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
+  // Close menu when clicking outside or pressing Escape
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node) && 
+          menuButtonRef.current && !menuButtonRef.current.contains(event.target as Node)) {
+        setMobileMenuOpen(false)
+      }
+    }
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false)
-  }
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [])
+
+  // Focus management for menu items
+  useEffect(() => {
+    if (mobileMenuOpen && menuRef.current) {
+      const firstLink = menuRef.current.querySelector('a')
+      firstLink?.focus()
+    }
+  }, [mobileMenuOpen])
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-40" role="banner">
-      <nav className="container-max section-padding !py-4" role="navigation" aria-label="Main navigation">
-        <div className="flex items-center justify-between">
+      <div className="container-max section-padding !py-4">
+        <nav 
+          className="flex items-center justify-between" 
+          role="navigation" 
+          aria-label="Main"
+        >
           {/* Logo */}
           <div className="flex items-center">
             <Link
               href="/"
-              className="flex items-center space-x-3 focus-ring rounded-md p-1"
+              className="flex items-center space-x-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md p-1"
               aria-label="DRIVEN LV - Home"
             >
               <Image
                 src="/driven-logo.png"
                 alt="DRIVEN LV Logo"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
+                width={132}
+                height={120}
+                className="h-30 w-auto"
                 priority
               />
+              <span className="sr-only">DRIVEN LV Home</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`nav-link ${item.current ? 'active' : ''}`}
-                aria-current={item.current ? 'page' : undefined}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <div className="hidden md:flex md:items-center md:space-x-1" role="menubar" aria-label="Main menu">
+            {navigation.map((item) => {
+              const isCurrent = pathname === item.href || 
+                              (item.href !== '/' && pathname.startsWith(item.href))
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                    isCurrent 
+                      ? 'bg-primary-100 text-primary-700' 
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                  } focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2`}
+                  role="menuitem"
+                  aria-current={isCurrent ? 'page' : undefined}
+                >
+                  {item.name}
+                  {isCurrent && <span className="sr-only">(current)</span>}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
+              ref={menuButtonRef}
               type="button"
-              className="btn-ghost p-2"
-              onClick={toggleMobileMenu}
+              className="p-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
+              aria-haspopup="true"
               aria-label={mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
             >
               <span className="sr-only">
@@ -85,6 +131,7 @@ export default function Header() {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
+                focusable="false"
               >
                 {mobileMenuOpen ? (
                   <path
@@ -102,34 +149,46 @@ export default function Header() {
               </svg>
             </button>
           </div>
-        </div>
+        </nav>
 
         {/* Mobile Navigation Menu */}
-        {mobileMenuOpen && (
-          <div
-            id="mobile-menu"
-            className="md:hidden mt-4 pb-4 border-t border-gray-200 pt-4"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="mobile-menu-button"
-          >
-            <div className="flex flex-col space-y-1">
-              {navigation.map((item) => (
+        <div 
+          id="mobile-menu"
+          ref={menuRef}
+          className={`md:hidden mt-4 pb-4 border-t border-gray-200 pt-4 transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'block' : 'hidden'
+          }`}
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="mobile-menu-button"
+          aria-hidden={!mobileMenuOpen}
+        >
+          <div className="flex flex-col space-y-2">
+            {navigation.map((item) => {
+              const isCurrent = pathname === item.href || 
+                              (item.href !== '/' && pathname.startsWith(item.href))
+              return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`nav-link block ${item.current ? 'active' : ''}`}
+                  className={`px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                    isCurrent 
+                      ? 'bg-primary-100 text-primary-700 font-semibold' 
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                  } focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2`}
                   role="menuitem"
-                  aria-current={item.current ? 'page' : undefined}
-                  onClick={closeMobileMenu}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  tabIndex={mobileMenuOpen ? 0 : -1}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
+                  {isCurrent && <span className="sr-only">(current page)</span>}
                 </Link>
-              ))}
-            </div>
+              )
+            })}
           </div>
-        )}
-      </nav>
+        </div>
+      </div>
     </header>
   )
 } 

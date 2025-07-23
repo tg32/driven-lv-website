@@ -59,8 +59,8 @@ export default function AccessibilityStatement() {
           </p>
           <div className="mt-6 space-y-2">
             <p><strong>Email:</strong> <a href="mailto:accessibility@drivenlv.com" className="text-primary-600 hover:text-primary-700">accessibility@drivenlv.com</a></p>
-            <p><strong>Phone:</strong> <a href="tel:+17025551234" className="text-primary-600 hover:text-primary-700">(702) 555-1234</a></p>
-            <p><strong>Address:</strong> 123 Accessible Way, Las Vegas, NV 89123</p>
+            <p><strong>Phone:</strong> <a href="tel:+17024634874" className="text-primary-600 hover:text-primary-700">(702) 463-4874</a></p>
+            <p><strong>Address:</strong> 701 E Bridger Ave Suite 150, Las Vegas, NV 89101</p>
           </div>
 
           <h2 className="text-2xl font-semibold text-gray-900 mt-12 mb-6">
