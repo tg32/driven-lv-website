@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  basePath: '/driven-lv-website',
+  assetPrefix: '/driven-lv-website/',
   images: {
     unoptimized: true,
     remotePatterns: [
