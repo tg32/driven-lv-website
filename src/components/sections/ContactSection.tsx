@@ -193,7 +193,7 @@ export default function ContactSection() {
                   <h3 className="font-semibold text-gray-900 mb-1">Visit Us</h3>
                   <address className="not-italic text-gray-600">
                     <a 
-                      href="https://maps.google.com/?q=123+Accessible+Way+Las+Vegas+NV+89123" 
+                      href="https://maps.google.com/?q=701+E+Bridger+Ave+Suite+150+Las+Vegas+NV+89101" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-primary-50 rounded"
