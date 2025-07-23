@@ -75,9 +75,9 @@ export default function Header() {
               <Image
                 src="/driven-lv-website/driven-logo.png"
                 alt="DRIVEN LV Logo"
-                width={100}
-                height={90}
-                className="h-16 w-auto"
+                width={125}
+                height={113}
+                className="h-20 w-auto"
                 priority
               />
               <span className="sr-only">DRIVEN LV Home</span>
