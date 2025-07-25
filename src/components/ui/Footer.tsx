@@ -32,7 +32,7 @@ export default function Footer({ id }: FooterProps) {
               <span className="text-xl font-bold">DRIVEN LV</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md leading-relaxed">
-              Las Vegas's premier accessible fitness center, empowering individuals with 
+              Empowering individuals with 
               disabilities through adaptive fitness programs and inclusive community support.
             </p>
             
